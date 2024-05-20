@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using tareas.Servicios;
 
 namespace tareas
 {
@@ -20,6 +23,11 @@ namespace tareas
             builder.Services.AddControllersWithViews(opciones =>
             {
                 opciones.Filters.Add(new AuthorizeFilter(politicaUsuarioAutenticado));
+            }).AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
+            .AddDataAnnotationsLocalization(opciones =>
+            {
+                opciones.DataAnnotationLocalizerProvider = (_, fatoria) =>
+                fatoria.Create(typeof(RecursoCompartido));
             });
             //DB conexion
             builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer("name=defaulConnection"));
@@ -36,7 +44,25 @@ namespace tareas
                 opciones.LoginPath = "/usuarios/login";
                 opciones.AccessDeniedPath = "/usuarios/login";
             });
+            //localizacion para que cambie el idioma
+            builder.Services.AddLocalization(opciones =>
+            {
+                opciones.ResourcesPath = "Recursos";
+            });
+            /////
             var app = builder.Build();
+            //
+          
+            app.UseRequestLocalization(opciones =>
+
+            {
+
+                opciones.DefaultRequestCulture = new RequestCulture("es");  // ESTA ES LA CULTURA POR DEFECTO.
+
+                opciones.SupportedUICultures = Constantes.CulturasUISoportadas
+                    .Select(cultura => new CultureInfo(cultura.Value)).ToList();
+
+            });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
