@@ -19,7 +19,7 @@ namespace tareas.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Saludo = localizer["Buenos Dias"];
+            //ViewBag.Saludo = localizer["Buenos Dias"];
             return View();
         }
 

@@ -49,8 +49,14 @@ namespace tareas
             {
                 opciones.ResourcesPath = "Recursos";
             });
+
+            //
+            builder.Services.AddTransient<IServiciosUsuarios, ServicioUsuario>();
+            //AutoMapper
+            builder.Services.AddAutoMapper(typeof(Program));
             /////
             var app = builder.Build();
+           
             //
           
             app.UseRequestLocalization(opciones =>
