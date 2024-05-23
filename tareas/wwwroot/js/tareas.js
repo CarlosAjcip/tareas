@@ -108,6 +108,12 @@ async function manejarClickTarea(tarea) {
     tareaEditarVM.id = json.id;
     tareaEditarVM.titulo(json.titulo);
     tareaEditarVM.descripcion(json.descripcion);
+    tareaEditarVM.pasos([]);
+    json.pasos.forEach(paso => {
+
+        tareaEditarVM.pasos.push(
+            new pasoViewModel({ ...paso, modoEdicion: false }))
+    })
 
     modalEdtiarTareabootstrap.show()
 }
@@ -175,9 +181,12 @@ async function borrarTarea(tarea) {
 }
 
 function ontenerIndiceTareaEnEdicion() {
-    return tareaListadoViewModel.tareas().finIndex(x => x.id() == tareaEditarVM.id);
+    return tareaListadoViewModel.tareas().findIndex(x => x.id() == tareaEditarVM.id);
 }
-
+function obtenerTareaEnEdicion() {
+    const indice = ontenerIndiceTareaEnEdicion();
+    return tareaListadoViewModel.tareas()[indice];
+}
 $(function () {
     $("#reordenable").sortable({
         axis: 'y',
@@ -186,3 +195,4 @@ $(function () {
         }
     })
 })
+

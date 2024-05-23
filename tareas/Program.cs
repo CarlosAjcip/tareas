@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Text.Json.Serialization;
 using tareas.Servicios;
 
 namespace tareas
@@ -28,6 +29,9 @@ namespace tareas
             {
                 opciones.DataAnnotationLocalizerProvider = (_, fatoria) =>
                 fatoria.Create(typeof(RecursoCompartido));
+            }).AddJsonOptions(opcioens =>
+            {
+                opcioens.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
             //DB conexion
             builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer("name=defaulConnection"));
