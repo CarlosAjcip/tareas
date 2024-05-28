@@ -58,7 +58,9 @@ namespace tareas
             builder.Services.AddTransient<IServiciosUsuarios, ServicioUsuario>();
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(Program));
-            /////
+            /////Almacenar archivos de manera local
+            builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
+            ///
             var app = builder.Build();
            
             //

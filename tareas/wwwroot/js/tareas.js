@@ -111,11 +111,12 @@ async function manejarClickTarea(tarea) {
     tareaEditarVM.pasos([]);
     json.pasos.forEach(paso => {
 
-        tareaEditarVM.pasos.push(
-            new pasoViewModel({ ...paso, modoEdicion: false }))
+        tareaEditarVM.pasos.push(new pasoViewModel({ ...paso, modoEdicion: false }))
     })
 
-    modalEdtiarTareabootstrap.show()
+    prepararArchivosAdjuntos(json.archivosAdjuntoss);
+
+    modalEdtiarTareabootstrap.show();
 }
 
 async function manejarCambioEditarTarea() {
