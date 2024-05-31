@@ -114,7 +114,9 @@ async function manejarClickTarea(tarea) {
         tareaEditarVM.pasos.push(new pasoViewModel({ ...paso, modoEdicion: false }))
     })
 
-    prepararArchivosAdjuntos(json.archivosAdjuntoss);
+    prepararArchivosAdjuntos(json.archivoAdjuntos);
+
+
 
     modalEdtiarTareabootstrap.show();
 }
